@@ -16,9 +16,9 @@ app.use(bodyParser.json())
 
 app.post("/login", async (req,res)=>{
 
-    console.log("post request worked")
-    //let email = req.body.email
-    //let pass = req.body.password
+    console.log("post request worked: ",req.url)
+    let email = req.body.email
+    let pass = req.body.password
     //let email = req.email
     //let pass = req.password
 
@@ -29,8 +29,8 @@ app.post("/login", async (req,res)=>{
     else{
         res.send({status: false, message: "No such Login"})
     }*/
-    //console.log(email,pass)
-    res.send({status: true, message: "Login exists"})
+    console.log(email,pass)
+    res.send({status: 204, message: "Login exists"})
 })
 
 app.post("/Login/Register", async (req,res)=>{
@@ -50,6 +50,6 @@ app.post("/Login/Register", async (req,res)=>{
     }
 })
 
-app.listen(8080,()=>{
+app.listen(8000,()=>{
     console.log("Server is running on port: 8080")
 })
