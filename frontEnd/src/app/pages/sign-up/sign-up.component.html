@@ -1,0 +1,35 @@
+<div class="container-fluid">
+
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+
+
+        <form class="row g-3 vb" [formGroup]="signUpForm" (ngSubmit) = "onSignUp()">
+            <div class="col-md-6 abc">
+              <label for="inputCity" class="form-label fl">First Name</label>
+              <input type="text" class="form-control" id="inputCity"formControlName="fname">
+            </div>
+            
+            <div class="col-md-6 abc">
+              <label for="inputZip" class="form-label fl">Last Name</label>
+              <input type="text" class="form-control" id="inputZip" formControlName="lname">
+            </div>
+            <div class="col-md-6 abc">
+              <label for="inputEmail4" class="form-label ab">Email</label>
+              <input type="email" class="form-control" id="inputEmail4" formControlName="email">
+            </div>
+            <div class="col-md-6 abc">
+              <label for="inputPassword4" class="form-label fl">Password</label>
+              <input type="password" class="form-control" id="inputPassword4" formControlName="password">
+            </div>
+            
+            
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary">Sign Up</button>
+            </div>
+          </form>
+
+    </div>
+  </div>
+
+</div> 

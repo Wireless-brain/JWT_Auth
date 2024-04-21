@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../../api.service';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-login-or-sign-up',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,RouterLink],
   templateUrl: './login-or-sign-up.component.html',
   styleUrl: './login-or-sign-up.component.css'
 })

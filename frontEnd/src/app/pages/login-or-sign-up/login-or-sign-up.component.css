@@ -6,3 +6,9 @@
     height: 100vh;
 
 }
+
+.newBtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
