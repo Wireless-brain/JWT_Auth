@@ -3,11 +3,13 @@ import { RouterOutlet } from '@angular/router';
 import { LoginOrSignUpComponent } from './pages/login-or-sign-up/login-or-sign-up.component';
 import { ApiService } from './api.service';
 import { SignUPComponent } from './pages/sign-up/sign-up.component';
+import { NewSignInComponent } from './pages/new-sign-in/new-sign-in.component';
+import { NewSignUpComponent } from './pages/new-sign-up/new-sign-up.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,LoginOrSignUpComponent,AppComponent,SignUPComponent],
+  imports: [RouterOutlet,LoginOrSignUpComponent,AppComponent,SignUPComponent,NewSignInComponent,NewSignUpComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

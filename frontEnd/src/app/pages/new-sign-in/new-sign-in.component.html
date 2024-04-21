@@ -1,0 +1,35 @@
+<div class="newDiv">
+
+<div class="card newCard" style="width: 30rem;">
+    <div class="card-body">
+      <h5 class="card-title abmc">Log In</h5>
+
+      <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+          <div class="row mb-3 inEl">
+        <div class="newEl">
+          <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+              <input type="email" class="form-control inpt" id="inputEmail3" formControlName="email">
+          </div>
+        </div>
+          </div>
+          <div class="row mb-3 inEl">
+        <div class="newEl">
+          <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+          <div class="col-sm-10 ps">
+              <input type="password" class="form-control inpt" id="inputPassword3" formControlName="password"> 
+          </div>
+        </div>
+          </div>
+          <div class="btn">
+              <button type="submit" class="btn btn-primary">Log In</button>
+          </div>
+          <div>
+            <h5 class="abcd"><a href="">or Sign Up</a></h5>
+          </div>
+      </form>
+
+    </div>
+  </div>
+
+</div>
