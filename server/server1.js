@@ -16,14 +16,21 @@ app.post('/login',(req, res) => {
 
     let username = req.body.username
     let password = req.body.password
-
     console.log(username,password)
 
-    let token = generateToken(username)
-    let refToken = jwt.sign({ user: username }, process.env.REFRESH_TOKEN)
-    refTokens.push(refToken)
+    if (loginCheck(username, password)) {
 
-    res.status(201).send({reqToken: token, refreshToken: refToken})
+        let token = generateToken(username)
+        let refToken = jwt.sign({ user: username }, process.env.REFRESH_TOKEN)
+        refTokens.push(refToken)
+    
+        res.status(201).send({status: true, reqToken: token, refreshToken: refToken})
+    }
+    else {
+        res.status().send({status: false, reqToken: "", refreshToken: ""})
+    }
+
+
 })
 
 app.post('/token', (req, res) => {

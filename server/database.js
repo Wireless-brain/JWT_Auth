@@ -1,5 +1,6 @@
 import mysql from 'mysql2'
 import dotenv from 'dotenv'
+import bcrypt from 'bcrypt'
 
 dotenv.config()
 
@@ -12,7 +13,7 @@ const pool = mysql.createPool({
 
 export async function setData(Fnam,Lnam,mail,pass){
 
-    let qry2 = "SELECT * FROM REGWEB WHERE EMAIL=? AND PASSWORD=?"
+    let qry2 = "SELECT * FROM angularPrjt WHERE EMAIL=? AND PASSWORD=?"
     let [num] = await pool.query(qry2,[mail,pass])
     if (num.length>0){
 
@@ -20,8 +21,15 @@ export async function setData(Fnam,Lnam,mail,pass){
     }
     else{
         
-        let qry = "INSERT INTO REGWEB(FNAME,LNAME,EMAIL,PASSWORD) VALUES(?,?,?,?)"
+        let qry = "INSERT INTO angularPrjt(EMAIL, PASSWORD, FNAME, LNAME) VALUES(?,?,?,?)"
+
+
+        newPass = 
+
+
         await pool.query(qry,[Fnam,Lnam,mail,pass])
+        let qry2 = "INSERT INTO tknHldr(EMAIL, TOKEN) VALUES(?, ?)"
+        await pool.query(qry2, [mail, null])
         return 1
     }
 }
