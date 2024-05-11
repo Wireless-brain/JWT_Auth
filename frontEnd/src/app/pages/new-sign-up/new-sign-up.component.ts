@@ -12,6 +12,9 @@ import { ApiService } from '../../api.service';
 export class NewSignUpComponent {
 
  constructor (private api: ApiService) {}
+
+ 
+
 onSignUp (){
  
   let data1 =

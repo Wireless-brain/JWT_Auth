@@ -1,17 +1,24 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ApiService } from '../../api.service';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-new-sign-in',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,RouterLink],
   templateUrl: './new-sign-in.component.html',
   styleUrl: './new-sign-in.component.css'
 })
 export class NewSignInComponent {
 
-  constructor(public api: ApiService) {}
+  constructor(public auth: AuthService, private router: Router) {}
+
+  ngOnInit(){
+    if (this.auth.loggedIn()){
+      this.router.navigate(['/admin/home'])
+    }
+  }
 
   onSubmit(){
     let data = 
@@ -19,7 +26,8 @@ export class NewSignInComponent {
       "email": this.signInForm.value.email,
       "password": this.signInForm.value.password 
     }
-    this.api.sendData(data)
+    this.auth.newData(data)
+    this.router.navigate(['/admin/home'])
   }
 
   signInForm = new FormGroup({

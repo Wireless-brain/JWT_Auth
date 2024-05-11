@@ -23,7 +23,7 @@ export class LoginOrSignUpComponent {
     "password":this.signInForm.value.password
     }
 
-    this.api.sendData(data)
+    //this.api.sendData(data)
   }
   signInForm = new FormGroup({
     email: new FormControl(""),
