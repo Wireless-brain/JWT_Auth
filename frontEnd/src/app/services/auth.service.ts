@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
+import { Observable, catchError, of, switchMap, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class AuthService {
 
   }
 
-  getData() {
+  // getData() {
     
     // let retVal = this.isTokenExpired()
     // console.log("Is token valid: ",retVal)
@@ -31,16 +32,22 @@ export class AuthService {
     // }
     
     // let jwttoken = localStorage.getItem("reqTkn")
-    this.tokenHandling()
-
-    console.log("Sending the get request")
-    return this.http.get("http://localhost:4000/admin/home") //No need to add the token to the header as the interceptor will do it
+    //this.tokenHandling()
+    
+    // if (!this.isTokenExpired()){
+    //   this.refToken().subscribe((res: any) => {
+    //     console.log("Result of refToken(): ", res)
+    //     console.log("Sending the get request")
+    //     return this.http.get("http://localhost:4000/admin/home") //No need to add the token to the header as the interceptor will do it
+    //   })
+    // }
+    // return this.http.get("http://localhost:4000/admin/home")
     // {
     //   headers: {
     //     authorization: 'Bearer ' + jwttoken,
     //   },
     // })
-  }
+  //}
 
   // async getData() {
     
@@ -111,25 +118,82 @@ export class AuthService {
     let expiration_time = decode.exp * 1000
     let timeNow = new Date().getTime()
     
-    console.log("Value of experation and current time: ", expiration_time, timeNow)
+    //console.log("Value of experation and current time: ", expiration_time, timeNow)
 
     return expiration_time > timeNow
   }
 
-  refToken(){
+  // refToken(){
+  //   let tkn = {
+  //     token: localStorage.getItem("refTkn")
+  //   }    
+  //   return this.http.post("http://localhost:3000/token", tkn).subscribe((res: any) => {
+  //     if (res.status){
+  //       console.log("Refreshed token: ", res)
+  //       this.setToken("reqTkn", res.reqToken)
+  //     }
+  //   })
+  // }
 
-    let tkn = {
+  // refToken() {
+  //   let token1 = {
+  //     token: this.getToken("refreshTkn")
+  //   } 
+  //   return this.http.post("http://localhost:3000/token", token1).subscribe((res: any) => {
+  //     if (res.status){
+  //       console.log("Refreshed token: ", res)
+  //       this.setToken("reqTkn", res.reqToken)
+  //       return true
+  //     }
+  //     return false
+  //   })
+  // }
+
+  getData(): Observable<any> {
+
+    if (!this.isTokenExpired()) {
+
+      return this.refToken().pipe(
+        switchMap(() => {
+
+          console.log("Sending the get request after token refresh");
+          return this.http.get("http://localhost:4000/admin/home");
+        }),
+        catchError(error => {
+
+          console.error('Error refreshing token', error);
+          return of(null); // Handle error appropriately
+        })
+      );
+    } 
+    else {
+
+      console.log("Sending the get request without token refresh");
+      return this.http.get("http://localhost:4000/admin/home");
+    }
+  }
+
+  refToken(): Observable<any> {
+
+    const tkn = {
+
       token: localStorage.getItem("refTkn")
-    }    
+    };
 
-    this.http.post("http://localhost:3000/token", tkn).subscribe((res: any) => {
-      if (res.status){
-        console.log("Refreshed token: ", res)
-        this.setToken("reqTkn", res.reqToken)
-        return true
-      }
-      return false
-    })
-    return false
+    return this.http.post("http://localhost:3000/token", tkn)
+    .pipe(tap((res: any) => {
+
+        if (res.status) {
+
+          console.log("Refreshed token: ", res);
+          this.setToken("reqTkn", res.reqToken);
+        }
+      }),
+      catchError(error => {
+
+        console.error('Error refreshing token', error);
+        return of(null); // Handle error appropriately
+      })
+    );
   }
 }
