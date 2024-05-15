@@ -5,14 +5,14 @@ import { inject } from '@angular/core';
 export const loggerInterceptor: HttpInterceptorFn = (req, next) => {
 
   const authService = inject(AuthService)
-  const token = authService.getToken()
+  const token = authService.getToken("reqTkn")
 
   if (token)
   { 
     req.clone({
       setHeaders: {
         Authorization: 'Bearer ${token}',
-      }
+      },
     })
   }
 

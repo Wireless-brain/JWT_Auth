@@ -26,8 +26,15 @@ export class NewSignInComponent {
       "email": this.signInForm.value.email,
       "password": this.signInForm.value.password 
     }
-    this.auth.newData(data)
-    this.router.navigate(['/admin/home'])
+
+    //console.log("Empty form",data)
+    if (data.email == "" || data.password == ""){
+      alert("Enter the username and password")
+    }
+    else{
+      this.auth.newData(data)
+      //this.router.navigate(['/admin/home'])
+    }
   }
 
   signInForm = new FormGroup({

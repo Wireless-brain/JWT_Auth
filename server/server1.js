@@ -36,7 +36,7 @@ app.post('/login', async (req, res) => {
         //res.status(201).send({"message": "Sign in Successful"})
     }
     else if (retVal == -1){
-        res.status(400).send({status: false, message: "Inavalid username or password"})
+        res.status(401).send({status: false, message: "Inavalid username or password"})
     }
     else {
         res.status().send({status: false, reqToken: "", refreshToken: ""})
@@ -80,7 +80,7 @@ app.post('/token', async (req, res) => {
         if (err) return res.status(403).send({message: "Verification of token failed"})
         if (user.user == vl){ 
             let newReqTok = generateToken(user.user)
-            res.send({message: "New access token",reqToken: newReqTok})
+            res.status(200).send({status: true, message: "New access token",reqToken: newReqTok})
         }
         else{
             res.status(401).send({message: "User of refresh token not matching"})
