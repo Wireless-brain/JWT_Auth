@@ -10,9 +10,7 @@ export class AuthService {
 
   constructor(private router: Router, private http: HttpClient) {}
 
-
   tokenHandling(){
-
     if (!this.isTokenExpired()){
       this.refToken()
       return localStorage.getItem("reqTkn") 
@@ -22,7 +20,6 @@ export class AuthService {
     }
 
   }
-
 
   getData() {
     
@@ -34,14 +31,15 @@ export class AuthService {
     // }
     
     // let jwttoken = localStorage.getItem("reqTkn")
-    let jwttoken = this.tokenHandling()
+    this.tokenHandling()
 
     console.log("Sending the get request")
-    return this.http.get("http://localhost:4000/admin/home", {
-      headers: {
-        authorization: 'Bearer ' + jwttoken,
-      },
-    })
+    return this.http.get("http://localhost:4000/admin/home") //No need to add the token to the header as the interceptor will do it
+    // {
+    //   headers: {
+    //     authorization: 'Bearer ' + jwttoken,
+    //   },
+    // })
   }
 
   // async getData() {

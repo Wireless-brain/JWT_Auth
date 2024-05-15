@@ -9,11 +9,13 @@ export const loggerInterceptor: HttpInterceptorFn = (req, next) => {
 
   if (token)
   { 
-    req.clone({
+    let cloned = req.clone({
       setHeaders: {
-        Authorization: 'Bearer ${token}',
+        authorization: 'Bearer ' + token,
       },
     })
+
+    return next(cloned)
   }
 
   return next(req)
