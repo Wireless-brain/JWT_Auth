@@ -3,13 +3,16 @@ import cors from 'cors'
 import jwt from 'jsonwebtoken'
 import dotnev from 'dotenv'
 import {setData, loginCheck, storeToken, ifTknValid, dltToken} from './database.js'
+import cookieParser from 'cookie-parser'
 
 dotnev.config()
 const app = express()
+app.use(cookieParser())
 app.use(express.json())
-app.use(cors())
-
-//let refTokens = []
+app.use(cors({
+    origin: 'http://localhost:4200',
+    credentials: true
+}))
 
 app.post('/login', async (req, res) => {
 
@@ -26,9 +29,16 @@ app.post('/login', async (req, res) => {
         let token = generateToken(username)
         let refToken = jwt.sign({ user: username }, process.env.REFRESH_TOKEN)
         //refTokens.push(refToken)
+
+        const tme = 100 * 365 * 24 * 60 * 60 * 1000
+
+
         let resL= await storeToken(username, refToken)
         if (resL == 1){
-            res.status(201).send({status: true, reqToken: token, refreshToken: refToken})            
+            res.cookie("refToken",refToken, {
+                expires: new Date(Date.now() + tme),
+                httpOnly: true
+            }).status(201).send({status: true, reqToken: token})
         }
         else{
             res.status(401).send({message: "Token storage error"})
@@ -69,9 +79,14 @@ app.post('/signUp', async (req, res) => {
 
 app.post('/token', async (req, res) => {
 
-    let refTok = req.body.token
-    if (refTok == null) return res.status(401).send({message: "No valid token"})
+    console.log(req.url)
+    let refTok = req.cookies.refToken
+    if (refTok == null) {
+        console.log("No valid token, it is null: ", refTok)
+        return res.status(401).send({message: "No valid token"})
+    } 
     // if (!refTokens.includes(refTok)) return res.sendStatus(403)
+    console.log("Token in cookie for refresh: ", refTok)
     let vl = await ifTknValid(refTok)
     console.log("Value returned by ifTknValid(): ", vl)
     if (vl != null){
@@ -96,8 +111,11 @@ app.post('/token', async (req, res) => {
 
 app.post('/logout', async (req, res) => {
 
-    let refTo = req.body.token
+    // let refTo = req.body.token
 
+    let refTo = req.cookies.refToken
+    console.log(req.url)
+    console.log("Cookies: ", req.cookies)
     // if (!refTokens.includes(refTo)) return res.sendStatus(403)
     // refTokens.pop(refTo)
     let nvl = await ifTknValid(refTo)
@@ -111,7 +129,11 @@ app.post('/logout', async (req, res) => {
             if (nvl == user.user){
                 let nlv = await dltToken(user.user)
                 if (nlv == 1){
-                    res.send({message: "Logout Sucess"}).status(200)
+                    res.cookie("refToken", '', {
+                        expires: new Date(0),
+                        httpOnly: true
+                    })
+                    .send({message: "Logout Sucess"}).status(200)
                 }
                 else{
                     res.send({message: "Logout unsuccessfull"}).status(401)

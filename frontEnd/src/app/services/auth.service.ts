@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
@@ -21,13 +21,14 @@ export class AuthService {
   }
   
   loggedIn(){
-    let tknVl = this.getToken("refTkn")
+    let tknVl = this.getToken("reqTkn")
     console.log("Value of token in loggedIn(): ", tknVl )
-    if (tknVl == null){
-      return false
+    console.log("Is token valid: ", this.isTokenExpired())
+    if (tknVl != null){
+      return true
     }
     else{
-      return true
+      return false
     }
     //return this.getToken("refTkn") != null
   }
@@ -38,23 +39,37 @@ export class AuthService {
       token: localStorage.getItem("refTkn")
     }
     
-    this.http.post("http://localhost:3000/logout", tkn).subscribe((res: any) => {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+
+    this.http.post("http://localhost:3000/logout", {}, {
+      headers,
+      withCredentials: true
+    }).subscribe((res: any) => {
       console.log(res)
     })
     
-    localStorage.removeItem('refTkn')
+    localStorage.removeItem('reqTkn')
     this.router.navigate(['/login'])
   }
   
   newData(data: any) {
     
-    return this.http.post("http://localhost:3000/login",data).subscribe((res: any) => {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+
+    return this.http.post("http://localhost:3000/login", data, {
+      headers,
+      withCredentials: true
+    }).subscribe((res: any) => {
       if (res.status)
         {
           this.setToken("reqTkn", res.reqToken)
           console.log("Request Token: ", this.getToken("reqTkn"))
-          this.setToken("refTkn", res.refreshToken)
-          console.log("Refresh Token: ", this.getToken("refTkn"))
+          //this.setToken("refTkn", res.refreshToken)
+          //console.log("Refresh Token: ", this.getToken("refTkn"))
           this.router.navigate(['/admin/home'])
         }
       })
@@ -105,13 +120,20 @@ export class AuthService {
         
       token: localStorage.getItem("refTkn")
     };
-      
-    return this.http.post("http://localhost:3000/token", tkn)
+    
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+    console.log("Inside refToken to get new reqTkn")
+    return this.http.post("http://localhost:3000/token", {}, {
+      headers,
+      withCredentials: true
+    })
     .pipe(tap((res: any) => {
         
       if (res.status) {
           
-        console.log("Refreshed token: ", res);
+        console.log("New ReqToken: ", res);
         this.setToken("reqTkn", res.reqToken);
       }
       }),
