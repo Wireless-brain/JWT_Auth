@@ -17,10 +17,20 @@ app.get('/admin/home', authorizeUser, async (req, res) => {
     if (retData == null){
         res.status(401).send({message: "Data not found"})
     }
-    console.log(retData)
+    //console.log(retData)
 
     res.send({message: msg, photo: retData.photo, fname: retData.fname, lname: retData.lname})
 
+})
+
+app.arguments('/admin/about', authorizeUser, async (req, res) => {
+    let msg = req.user.user + ", data for about"
+
+    let retData = await getData(req.user.user)
+    if (retData == null){
+        res.status(401).send({message: "Data not found"})
+    }
+    res.send({message: msg, photo: retData.photo, fname: retData.fname, lname: retData.lname, email: retData.email, about: retData.about, mobile: retData.mobile})    
 })
 
 function authorizeUser(req, res, next) {

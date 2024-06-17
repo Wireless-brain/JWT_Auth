@@ -63,8 +63,10 @@ app.post('/signUp', async (req, res) => {
     let fname = req.body.fname
     let lname = req.body.lname
     let prof = req.body.profile
+    let abt = req.body.about
+    let mob = req.body.mobile
 
-    let rslt = await setData(email, pass, fname, lname, prof)
+    let rslt = await setData(email, pass, fname, lname, prof, abt, mob)
     //console.log("Value returend by function: ",rslt)
     if (rslt == 3){
         res.status(201).send({status: true, message: "Sign up Successfull"})

@@ -24,7 +24,9 @@ onSignUp (){
   "lname": this.signUpForm.value.lname,
   "email": this.signUpForm.value.email,
   "password": this.signUpForm.value.password,
-  "profile": this.signUpForm.value.profile
+  "profile": this.signUpForm.value.profile,
+  "about": this.signUpForm.value.about,
+  "mobile": this.signUpForm.value.mobile
  }
 
  this.auth.signUpData(data1)
@@ -34,6 +36,8 @@ onSignUp (){
     lname: new FormControl(''),
     email: new FormControl(''),
     password: new FormControl(''),
-    profile: new FormControl('')
+    profile: new FormControl(''),
+    about: new FormControl(''),
+    mobile: new FormControl('')
   })
 }

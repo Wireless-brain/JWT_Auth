@@ -11,7 +11,7 @@ const pool = mysql.createPool({
     database: process.env.DATABASE
 }).promise()
 
-export async function setData(mail, pass, Fnam, Lnam, prof){
+export async function setData(mail, pass, Fnam, Lnam, prof, abt, mob){
 
     let qry2 = "SELECT * FROM angularPrjt WHERE EMAIL=?"
     let [num] = await pool.query(qry2,[mail])
@@ -28,8 +28,8 @@ export async function setData(mail, pass, Fnam, Lnam, prof){
             let newPass = await bcrypt.hash(pass, 10)
             
             //console.log("Salt and newPAss: ",salt, newPass)
-            let qry = "INSERT INTO angularPrjt(FNAME, LNAME, EMAIL, PASSWORD, PHOTO) VALUES(?,?,?,?,?)"
-            await pool.query(qry,[Fnam, Lnam, mail, newPass, prof])
+            let qry = "INSERT INTO angularPrjt(FNAME, LNAME, EMAIL, PASSWORD, PHOTO, ABOUT, MOBILE) VALUES(?,?,?,?,?,?,?)"
+            await pool.query(qry,[Fnam, Lnam, mail, newPass, prof, abt, mob])
             //console.log("Data inserte")
             let qry2 = "INSERT INTO tknHldr(EMAIL, TOKEN) VALUES(?, ?)"
             await pool.query(qry2, [mail, null])
@@ -103,11 +103,14 @@ export async function getData(mail) {
     let [rtVal] = await pool.query(q, [mail])
 
     if (rtVal != null){
-        console.log(rtVal[0])
+        //console.log(rtVal[0])
         return {
+            email: rtVal[0].email,
             fname: rtVal[0].fname,
             lname: rtVal[0].lname,
-            photo: rtVal[0].photo
+            photo: rtVal[0].photo,
+            about: rtVal[0].about,
+            mobile: rtVal[0].mobile
         }
     }
     return null
