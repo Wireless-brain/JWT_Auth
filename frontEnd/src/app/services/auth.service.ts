@@ -110,7 +110,9 @@ export class AuthService {
       else {
         
         console.log("Sending the get request without token refresh");
-        return this.http.get("http://localhost:4000/admin/home");
+        return this.http.get("http://localhost:4000/admin/home").pipe(tap((res:any) => {
+          console.log("From GET request: ", res)
+        }))
       }
     }
     

@@ -21,7 +21,7 @@ export class HomeComponent {
       console.log(res)
       this.fname = res.fname
       this.lname = res.lname
-      this.imgSrc = res.profile
+      this.imgSrc = res.photo
     })
   }
 

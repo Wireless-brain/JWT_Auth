@@ -107,7 +107,7 @@ export async function getData(mail) {
         return {
             fname: rtVal[0].fname,
             lname: rtVal[0].lname,
-            profile: rtVal[0].photo
+            photo: rtVal[0].photo
         }
     }
     return null

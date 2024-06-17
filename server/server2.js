@@ -19,7 +19,7 @@ app.get('/admin/home', authorizeUser, async (req, res) => {
     }
     console.log(retData)
 
-    res.send({message: msg, fname: retData.fname, lname: retData.lname, profile: retData.photo})
+    res.send({message: msg, photo: retData.photo, fname: retData.fname, lname: retData.lname})
 
 })
 
