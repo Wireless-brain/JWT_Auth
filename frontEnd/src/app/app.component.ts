@@ -5,11 +5,13 @@ import { ApiService } from './api.service';
 import { SignUPComponent } from './pages/sign-up/sign-up.component';
 import { NewSignInComponent } from './pages/new-sign-in/new-sign-in.component';
 import { NewSignUpComponent } from './pages/new-sign-up/new-sign-up.component';
+import { HeaderComponent } from './modules/admin/components/header/header.component';
+import { FooterComponent } from './modules/admin/components/footer/footer.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,LoginOrSignUpComponent,AppComponent,SignUPComponent,NewSignInComponent,NewSignUpComponent],
+  imports: [RouterOutlet,LoginOrSignUpComponent,AppComponent,SignUPComponent,NewSignInComponent,NewSignUpComponent, HeaderComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

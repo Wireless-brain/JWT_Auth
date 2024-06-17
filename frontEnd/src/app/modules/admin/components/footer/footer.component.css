@@ -1,0 +1,25 @@
+.ftrDiv1{
+    padding: 0px;
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    height: 50px;
+}
+
+.ftrDiv2{
+    padding: 0px;
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+    text-align: center;
+}
+
+.txtP{
+    margin: 0px;
+    font-family: Lucida Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 20px;
+}
