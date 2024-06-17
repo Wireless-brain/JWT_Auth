@@ -56,24 +56,24 @@ app.post('/login', async (req, res) => {
 })
 
 app.post('/signUp', async (req, res) => {
-    //console.log("Requested URL: ",req.url)
+    console.log("Requested URL: ",req.url)
 
     let email = req.body.email
     let pass = req.body.password
     let fname = req.body.fname
     let lname = req.body.lname
+    let prof = req.body.profile
 
-    let rslt = await setData(email, pass, fname, lname)
+    let rslt = await setData(email, pass, fname, lname, prof)
     //console.log("Value returend by function: ",rslt)
     if (rslt == 3){
-        res.status(201).send({message: "Sign up Successfull"})
+        res.status(201).send({status: true, message: "Sign up Successfull"})
     }
     else if (rslt == 2){
-        res.status(401).send({message: "Error during insertion"})
-        
+        res.status(401).send({status: false, message: "Error during insertion"})
     }
     else{
-        res.status(400).send({message: "User already exists"})
+        res.status(400).send({status: false, message: "User already exists"})
     }
 })
 

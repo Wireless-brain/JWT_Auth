@@ -12,11 +12,14 @@ app.use(cors())
 app.get('/admin/home', authorizeUser, async (req, res) => {
 
     let msg = req.user.user + ", You have been authorized"
+    // console.log
     let retData = await getData(req.user.user)
     if (retData == null){
         res.status(401).send({message: "Data not found"})
     }
-    res.send({message: msg, fname: retData.fname, lname: retData.lname})
+    console.log(retData)
+
+    res.send({message: msg, fname: retData.fname, lname: retData.lname, profile: retData.photo})
 
 })
 

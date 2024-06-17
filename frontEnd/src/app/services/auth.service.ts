@@ -144,4 +144,19 @@ export class AuthService {
       })
     );
   }
+
+  signUpData(data1: any){
+    console.log("Inside signUpData: ", data1)
+
+    return this.http.post("http://localhost:3000/signUp",data1).subscribe((res:any) => {
+      console.log(Response)
+      if (res.status){
+        alert("SignUp Successfull")
+        this.router.navigate(['/login'])
+      }
+    })
+  }
+
 }
+
+

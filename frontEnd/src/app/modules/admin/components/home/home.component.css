@@ -1,0 +1,44 @@
+.contSize1{
+    /* padding: 0px; */
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: antiquewhite; */
+}
+
+.contSize2{
+    /* margin-top: 30px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contSize3{
+    text-align: center;
+}
+
+.proFilePic{
+    /* margin-top: 30px; */
+    height:150px; 
+    border-radius: 48%; 
+    border: 10px solid #3c475f;
+}
+
+.Welcome{
+    margin: 0px;
+    margin-top: 20px;
+    font-size: 30px;
+    font-style: oblique;
+    color: black;
+}
+
+.nameUsr{
+    /* margin: 0px; */
+    font-size: 40px;
+    font-style: italic;
+}
+
+/* .logbtn{
+    margin-top: 30px;
+} */

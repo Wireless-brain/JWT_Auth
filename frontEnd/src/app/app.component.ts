@@ -7,11 +7,12 @@ import { NewSignInComponent } from './pages/new-sign-in/new-sign-in.component';
 import { NewSignUpComponent } from './pages/new-sign-up/new-sign-up.component';
 import { HeaderComponent } from './modules/admin/components/header/header.component';
 import { FooterComponent } from './modules/admin/components/footer/footer.component';
+import { HomeComponent } from './modules/admin/components/home/home.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,LoginOrSignUpComponent,AppComponent,SignUPComponent,NewSignInComponent,NewSignUpComponent, HeaderComponent, FooterComponent],
+  imports: [RouterOutlet,LoginOrSignUpComponent,AppComponent,SignUPComponent,NewSignInComponent,NewSignUpComponent, HeaderComponent, FooterComponent, HomeComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

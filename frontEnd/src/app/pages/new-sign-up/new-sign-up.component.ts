@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../../api.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-new-sign-up',
@@ -11,7 +12,7 @@ import { ApiService } from '../../api.service';
 })
 export class NewSignUpComponent {
 
- constructor (private api: ApiService) {}
+ constructor (private api: ApiService, private auth: AuthService) {}
 
  
 
@@ -22,15 +23,17 @@ onSignUp (){
   "fname": this.signUpForm.value.fname,
   "lname": this.signUpForm.value.lname,
   "email": this.signUpForm.value.email,
-  "password": this.signUpForm.value.password
+  "password": this.signUpForm.value.password,
+  "profile": this.signUpForm.value.profile
  }
 
- this.api.signUpData(data1)
+ this.auth.signUpData(data1)
 }
   signUpForm = new FormGroup({
     fname: new FormControl(''),
     lname: new FormControl(''),
     email: new FormControl(''),
     password: new FormControl(''),
+    profile: new FormControl('')
   })
 }
