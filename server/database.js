@@ -13,7 +13,7 @@ const pool = mysql.createPool({
 
 export async function setData(mail, pass, Fnam, Lnam, prof, abt, mob){
 
-    let qry2 = "SELECT * FROM angularPrjt WHERE EMAIL=?"
+    let qry2 = "SELECT * FROM angularprjt WHERE EMAIL=?"
     let [num] = await pool.query(qry2,[mail])
     //console.log("Value in num: ", num[0])
     //console.log("Value of lenght: ",num.length)
@@ -28,10 +28,10 @@ export async function setData(mail, pass, Fnam, Lnam, prof, abt, mob){
             let newPass = await bcrypt.hash(pass, 10)
             
             //console.log("Salt and newPAss: ",salt, newPass)
-            let qry = "INSERT INTO angularPrjt(FNAME, LNAME, EMAIL, PASSWORD, PHOTO, ABOUT, MOBILE) VALUES(?,?,?,?,?,?,?)"
+            let qry = "INSERT INTO angularprjt(FNAME, LNAME, EMAIL, PASSWORD, PHOTO, ABOUT, MOBILE) VALUES(?,?,?,?,?,?,?)"
             await pool.query(qry,[Fnam, Lnam, mail, newPass, prof, abt, mob])
             //console.log("Data inserte")
-            let qry2 = "INSERT INTO tknHldr(EMAIL, TOKEN) VALUES(?, ?)"
+            let qry2 = "INSERT INTO tknhldr(EMAIL, TOKEN) VALUES(?, ?)"
             await pool.query(qry2, [mail, null])
     
         }
