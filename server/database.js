@@ -99,13 +99,13 @@ export async function dltToken(mail){
 }
 
 export async function getData(mail) {
-    let q = "select fname, lname, photo from angularprjt where EMAIL=?"
+    let q = "select fname, lname, photo, about, mobile from angularprjt where EMAIL=?"
     let [rtVal] = await pool.query(q, [mail])
 
     if (rtVal != null){
         //console.log(rtVal[0])
         return {
-            email: rtVal[0].email,
+            email: mail,
             fname: rtVal[0].fname,
             lname: rtVal[0].lname,
             photo: rtVal[0].photo,
