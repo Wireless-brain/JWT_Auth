@@ -14,6 +14,8 @@ app.use(cors({
     credentials: true
 }))
 
+app.use(express.static('frontEnd'))
+
 app.post('/login', async (req, res) => {
 
     console.log(req.url)
