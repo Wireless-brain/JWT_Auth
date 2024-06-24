@@ -43,7 +43,7 @@ export class AuthService {
       'Content-Type': 'application/json'
     })
 
-    this.http.post("http://localhost:3000/logout", {}, {
+    this.http.post("http://54.235.53.86:3000/logout", {}, {
       headers,
       withCredentials: true
     }).subscribe((res: any) => {
@@ -60,7 +60,7 @@ export class AuthService {
       'Content-Type': 'application/json'
     })
 
-    return this.http.post("http://localhost:3000/login", data, {
+    return this.http.post("http://54.235.53.86:3000/login", data, {
       headers,
       withCredentials: true
     }).subscribe((res: any) => {
@@ -98,7 +98,7 @@ export class AuthService {
           switchMap(() => {
             
             //console.log("Sending the get request after token refresh");
-            return this.http.get("http://localhost:4000/admin/home");
+            return this.http.get("http://54.235.53.86:4000/admin/home");
           }),
           catchError(error => {
             
@@ -110,7 +110,7 @@ export class AuthService {
       else {
         
         //console.log("Sending the get request without token refresh");
-        return this.http.get("http://localhost:4000/admin/home").pipe(tap((res:any) => {
+        return this.http.get("http://54.235.53.86:4000/admin/home").pipe(tap((res:any) => {
           //console.log("From GET request: ", res)
         }))
       }
@@ -127,7 +127,7 @@ export class AuthService {
       'Content-Type': 'application/json'
     })
     //console.log("Inside refToken to get new reqTkn")
-    return this.http.post("http://localhost:3000/token", {}, {
+    return this.http.post("http://54.235.53.86:3000/token", {}, {
       headers,
       withCredentials: true
     })
@@ -150,7 +150,7 @@ export class AuthService {
   signUpData(data1: any){
     //console.log("Inside signUpData: ", data1)
 
-    return this.http.post("http://localhost:3000/signUp",data1).subscribe((res:any) => {
+    return this.http.post("http://54.235.53.86:3000/signUp",data1).subscribe((res:any) => {
       //console.log(Response)
       if (res.status){
         alert("SignUp Successfull")
