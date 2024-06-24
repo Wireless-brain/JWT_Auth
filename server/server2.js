@@ -17,7 +17,7 @@ app.get('/admin/home', authorizeUser, async (req, res) => {
     if (retData == null){
         res.status(401).send({message: "Data not found"})
     }
-    console.log(retData)
+    //console.log(retData)
 
     res.send({message: msg, email: retData.email, photo: retData.photo, fname: retData.fname, lname: retData.lname, about: retData.about, mobile: retData.mobile})
 
@@ -39,13 +39,13 @@ function authorizeUser(req, res, next) {
     let token = authHead && authHead.split(' ')[1]
 
     if (token == null){
-        console.log("Token is null")
+        //console.log("Token is null")
          return res.sendStatus(401)
     }
     jwt.verify(token, process.env.SECRET_ACCESS_TOKEN, (err, user) => {
 
         if (err){
-            console.log("Error during token verification")
+            //console.log("Error during token verification")
             console.log(err)
             return res.sendStatus(403)
         }         

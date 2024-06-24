@@ -18,14 +18,14 @@ app.use(express.static('frontEnd'))
 
 app.post('/login', async (req, res) => {
 
-    console.log(req.url)
+    //console.log(req.url)
 
     let username = req.body.email
     let password = req.body.password
-    console.log(username,password)
+    //console.log(username,password)
 
     let retVal = await loginCheck(username, password)
-    console.log("Value returned by loginCheck(): ", retVal)
+    //console.log("Value returned by loginCheck(): ", retVal)
     if (retVal == 1) {
 
         let token = generateToken(username)
@@ -58,7 +58,7 @@ app.post('/login', async (req, res) => {
 })
 
 app.post('/signUp', async (req, res) => {
-    console.log("Requested URL: ",req.url)
+   // console.log("Requested URL: ",req.url)
 
     let email = req.body.email
     let pass = req.body.password
@@ -83,16 +83,16 @@ app.post('/signUp', async (req, res) => {
 
 app.post('/token', async (req, res) => {
 
-    console.log(req.url)
+    //console.log(req.url)
     let refTok = req.cookies.refToken
     if (refTok == null) {
-        console.log("No valid token, it is null: ", refTok)
+        //console.log("No valid token, it is null: ", refTok)
         return res.status(401).send({message: "No valid token"})
     } 
     // if (!refTokens.includes(refTok)) return res.sendStatus(403)
-    console.log("Token in cookie for refresh: ", refTok)
+    //console.log("Token in cookie for refresh: ", refTok)
     let vl = await ifTknValid(refTok)
-    console.log("Value returned by ifTknValid(): ", vl)
+    //console.log("Value returned by ifTknValid(): ", vl)
     if (vl != null){
 
         jwt.verify(refTok, process.env.REFRESH_TOKEN, (err, user) => {
@@ -118,8 +118,8 @@ app.post('/logout', async (req, res) => {
     // let refTo = req.body.token
 
     let refTo = req.cookies.refToken
-    console.log(req.url)
-    console.log("Cookies: ", req.cookies)
+    //console.log(req.url)
+    //console.log("Cookies: ", req.cookies)
     // if (!refTokens.includes(refTo)) return res.sendStatus(403)
     // refTokens.pop(refTo)
     let nvl = await ifTknValid(refTo)
@@ -127,8 +127,8 @@ app.post('/logout', async (req, res) => {
     if (nvl != null){
         jwt.verify(refTo, process.env.REFRESH_TOKEN, async (err, user) => {
             if (err) return res.status(401).send({message: "Verification error"})
-            console.log("Value in /logout from ifValidTkn(): ", nvl)
-            console.log("Value of user in /logout from verify: ", user)
+            //console.log("Value in /logout from ifValidTkn(): ", nvl)
+            //console.log("Value of user in /logout from verify: ", user)
 
             if (nvl == user.user){
                 let nlv = await dltToken(user.user)

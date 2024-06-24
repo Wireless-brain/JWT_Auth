@@ -22,8 +22,8 @@ export class AuthService {
   
   loggedIn(){
     let tknVl = this.getToken("reqTkn")
-    console.log("Value of token in loggedIn(): ", tknVl )
-    console.log("Is token valid: ", this.isTokenExpired())
+    //console.log("Value of token in loggedIn(): ", tknVl )
+    //console.log("Is token valid: ", this.isTokenExpired())
     if (tknVl != null){
       return true
     }
@@ -35,9 +35,9 @@ export class AuthService {
   
   logoutNow(){
     
-    let tkn = {
-      token: localStorage.getItem("refTkn")
-    }
+    // let tkn = {
+    //   token: localStorage.getItem("refTkn")
+    // }
     
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ export class AuthService {
       headers,
       withCredentials: true
     }).subscribe((res: any) => {
-      console.log(res)
+      //console.log(res)
     })
     
     localStorage.removeItem('reqTkn')
@@ -67,7 +67,7 @@ export class AuthService {
       if (res.status)
         {
           this.setToken("reqTkn", res.reqToken)
-          console.log("Request Token: ", this.getToken("reqTkn"))
+          //console.log("Request Token: ", this.getToken("reqTkn"))
           //this.setToken("refTkn", res.refreshToken)
           //console.log("Refresh Token: ", this.getToken("refTkn"))
           this.router.navigate(['/admin/home'])
@@ -97,36 +97,36 @@ export class AuthService {
         return this.refToken().pipe(
           switchMap(() => {
             
-            console.log("Sending the get request after token refresh");
+            //console.log("Sending the get request after token refresh");
             return this.http.get("http://localhost:4000/admin/home");
           }),
           catchError(error => {
             
-            console.error('Error refreshing token', error);
+            //console.error('Error refreshing token', error);
             return of(false); // Handle error appropriately
           })
         );
       } 
       else {
         
-        console.log("Sending the get request without token refresh");
+        //console.log("Sending the get request without token refresh");
         return this.http.get("http://localhost:4000/admin/home").pipe(tap((res:any) => {
-          console.log("From GET request: ", res)
+          //console.log("From GET request: ", res)
         }))
       }
     }
     
   refToken(): Observable<any> {
       
-    const tkn = {
+    // const tkn = {
         
-      token: localStorage.getItem("refTkn")
-    };
+    //   token: localStorage.getItem("refTkn")
+    // };
     
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     })
-    console.log("Inside refToken to get new reqTkn")
+    //console.log("Inside refToken to get new reqTkn")
     return this.http.post("http://localhost:3000/token", {}, {
       headers,
       withCredentials: true
@@ -135,23 +135,23 @@ export class AuthService {
         
       if (res.status) {
           
-        console.log("New ReqToken: ", res);
+        //console.log("New ReqToken: ", res);
         this.setToken("reqTkn", res.reqToken);
       }
       }),
       catchError(error => {
         
-        console.error('Error refreshing token', error);
+        //console.error('Error refreshing token', error);
         return of(false); // Handle error appropriately
       })
     );
   }
 
   signUpData(data1: any){
-    console.log("Inside signUpData: ", data1)
+    //console.log("Inside signUpData: ", data1)
 
     return this.http.post("http://localhost:3000/signUp",data1).subscribe((res:any) => {
-      console.log(Response)
+      //console.log(Response)
       if (res.status){
         alert("SignUp Successfull")
         this.router.navigate(['/login'])

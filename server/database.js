@@ -47,7 +47,7 @@ export async function loginCheck(mail,pass)
 {
     let qry = "SELECT PASSWORD FROM ANGULARPRJT WHERE EMAIL=?"
     let [num] = await pool.query(qry,[mail])
-    console.log("Password from the DB: ", num[0].PASSWORD)
+    //console.log("Password from the DB: ", num[0].PASSWORD)
     try{
         if (await bcrypt.compare(pass, num[0].PASSWORD)){
     
@@ -81,7 +81,7 @@ export async function ifTknValid(refTk){
 
     let qre = "SELECT EMAIL FROM TKNHLDR WHERE TOKEN=?"
     let [ml] = await pool.query(qre, [refTk])
-    console.log("Mail id: ", ml[0])
+   //console.log("Mail id: ", ml[0])
     if (ml[0] != null){
         return ml[0].EMAIL
     }

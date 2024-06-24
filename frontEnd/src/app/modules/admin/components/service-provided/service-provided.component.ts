@@ -20,7 +20,7 @@ export class ServiceProvidedComponent {
 
   ngOnInit(){
     this.auth.getData().subscribe((res: any) => {
-      console.log(res)
+      //console.log(res)
       this.fname = res.fname
       this.lname = res.lname
       this.imgSrc = res.photo
